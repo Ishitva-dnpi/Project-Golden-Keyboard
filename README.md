@@ -68,10 +68,10 @@ python manage.py test
 
 ### 4. Start the Server
 ```bash
-python manage.py runserver
+python manage.py runserver 0.0.0.0:8000
 ```
 
-Once running, the base URL is `http://127.0.0.1:8000/`.
+Once running locally, open `http://127.0.0.1:8000/`. In GitHub Codespaces, use the forwarded port 8000 URL shown in the **Ports** tab; `127.0.0.1` in your computer's browser points to your computer, not the Codespace.
 
 ---
 
