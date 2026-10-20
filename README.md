@@ -38,9 +38,12 @@ All five API versions share the same `Mission` model and `MissionSerializer`. On
 ```bash
 # Create and activate virtual environment
 python -m venv venv
-# On Windows:
-.\venv\Scripts\activate
-# On Linux/macOS:
+# Activate the environment after creating it.
+# PowerShell:
+.\venv\Scripts\Activate.ps1
+# Command Prompt:
+venv\Scripts\activate.bat
+# Linux/macOS:
 source venv/bin/activate
 
 # Install dependencies
