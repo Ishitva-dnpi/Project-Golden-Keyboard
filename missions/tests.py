@@ -34,7 +34,7 @@ class MissionModelValidationTests(APITestCase):
             difficulty="boss_level",
             status="cracked",
             hostel="vyas_bhawan",
-            solver_handle="",  # missing solver
+            solver_handle="",
             deadline=self.now + timedelta(days=1),
         )
         with self.assertRaises(ValidationError):
@@ -55,11 +55,9 @@ class MissionAPITests(APITestCase):
         )
 
     def test_no_auth_api(self):
-        # List
         res = self.client.get("/api/v1/no-auth/missions/")
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
-        # Create
         data = {
             "codename": "New No-Auth Mission",
             "brief": "Find memory leak",
@@ -72,11 +70,9 @@ class MissionAPITests(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
     def test_basic_auth_api(self):
-        # Without credentials -> 401
         res = self.client.get("/api/v1/basic-auth/missions/")
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
-        # With credentials -> 200
         auth_header = "Basic " + base64.b64encode(b"testplayer:testpassword123").decode("ascii")
         self.client.credentials(HTTP_AUTHORIZATION=auth_header)
         res = self.client.get("/api/v1/basic-auth/missions/")
@@ -84,11 +80,9 @@ class MissionAPITests(APITestCase):
         self.client.credentials()
 
     def test_token_auth_api(self):
-        # Without token -> 401
         res = self.client.get("/api/v1/token-auth/missions/")
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
-        # Login -> 200 + token
         res = self.client.post(
             "/api/v1/token-auth/login/",
             {"username": "testplayer", "password": "testpassword123"},
@@ -97,18 +91,15 @@ class MissionAPITests(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         token = res.data["token"]
 
-        # With token -> 200
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {token}")
         res = self.client.get("/api/v1/token-auth/missions/")
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.client.credentials()
 
     def test_jwt_auth_api(self):
-        # Without JWT -> 401
         res = self.client.get("/api/v1/jwt-auth/missions/")
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
-        # Login -> 200 + access + refresh
         res = self.client.post(
             "/api/v1/jwt-auth/login/",
             {"username": "testplayer", "password": "testpassword123"},
@@ -117,7 +108,6 @@ class MissionAPITests(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         access_token = res.data["access"]
 
-        # With JWT -> 200
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {access_token}")
         res = self.client.get("/api/v1/jwt-auth/missions/")
         self.assertEqual(res.status_code, status.HTTP_200_OK)

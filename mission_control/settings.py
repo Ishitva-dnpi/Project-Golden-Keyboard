@@ -1,7 +1,3 @@
-"""
-Django settings for mission_control project.
-"""
-
 from pathlib import Path
 from datetime import timedelta
 
@@ -21,10 +17,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "rest_framework.authtoken",   # needed for Token Authentication
-    # shared model
+    "rest_framework.authtoken",
     "missions",
-    # five independently-configured API versions
     "auth_none",
     "auth_basic",
     "auth_session",
@@ -85,7 +79,6 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
-    # Authentication classes are defined per-viewset in each auth app
     "DEFAULT_AUTHENTICATION_CLASSES": [],
     "DEFAULT_PERMISSION_CLASSES": [],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",

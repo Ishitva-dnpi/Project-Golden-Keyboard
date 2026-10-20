@@ -6,8 +6,6 @@ urlpatterns = [
     path("", RedirectView.as_view(url="api/v1/no-auth/missions/", permanent=False)),
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
-
-    # API endpoints
     path("api/v1/no-auth/", include("auth_none.urls")),
     path("api/v1/basic-auth/", include("auth_basic.urls")),
     path("api/v1/session-auth/", include("auth_session.urls")),

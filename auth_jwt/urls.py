@@ -8,8 +8,6 @@ router = DefaultRouter()
 router.register("missions", JWTAuthMissionViewSet, basename="jwt-auth-mission")
 
 urlpatterns = [
-    # POST { "username": "...", "password": "..." } -> { "access": "...", "refresh": "..." }
     path("login/", TokenObtainPairView.as_view(), name="jwt-login"),
-    # POST { "refresh": "..." } -> { "access": "..." }
     path("refresh/", TokenRefreshView.as_view(), name="jwt-refresh"),
 ] + router.urls
